@@ -16,3 +16,4 @@ async def get_text_messages(msg: types.message):
         await msg.answer('Не понимаю')
 if __name__ == '__name__':
     executor.start_polling(dp)
+    bot.polling(none_stop=True)
