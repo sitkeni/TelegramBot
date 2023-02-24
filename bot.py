@@ -1,15 +1,14 @@
-from aiogram import Bot
-from aiogram import types
-from aiogram.dispatcher import Dispatcher
-from aiogram.utils import executor
+
+from telebot import TeleBot
+
+
 TOKEN = "6235950931:AAEqaoZ5MVzXuVy-HKZIFmrAsWPzzpBT0HU"
-bot = Bot(token=TOKEN)
-dp = Dispatcher(bot)
-@dp.message_handler(commands=['start', 'help'])
-async def send_welcom(msg: types.message):
+bot = TeleBot(token=TOKEN)
+bot.message_handler(commands=['start', 'help'])
+async def start(message):
     await msg.reply_to_message(f'Я бот .привет')
-@dp.message_handler(content_types=['text'])
-async def get_text_messages(msg: types.message):
+bot.message_handler(content_types=['text'])
+async def start2(message):
     if msg.text.lower() == 'привет':
         await msg.answer('Привет!')
     else:
