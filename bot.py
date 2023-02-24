@@ -7,7 +7,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 @dp.message_handler(commands=['start', 'help'])
 async def send_welcom(msg: types.message):
-    await msg.reply_to_message(f'Я бот .привет, {msg.from_user.first_name}')
+    await msg.reply_to_message(f'Я бот .привет')
 @dp.message_handler(content_types=['text'])
 async def get_text_messages(msg: types.message):
     if msg.text.lower() == 'привет':
