@@ -1,13 +1,31 @@
-import telebot
+import time
+import logging
 
-bot = telebot.TeleBot('6235950931:AAEqaoZ5MVzXuVy-HKZIFmrAsWPzzpBT0HU')
-bot.message_handler(content_types=['start'])
-def get_text_messages(message):
-    if message.text == "Привет":
-        bot.send_message(message.from_user.id, "Привет, чем я могу тебе помочь?")
-    elif message.text == '/help':
-        bot.send_message(message.from_user.id,"не понимэ")
-    else:
-        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
+from aiogram import Bot, Dispatcher, executor, types
 
-bot.polling(none_stop=True, interval=0)
+logging.basicConfig(level=logging.INFO)
+
+TOKEN = "6235950931:AAEqaoZ5MVzXuVy-HKZIFmrAsWPzzpBT0HU"
+MSG = "Как дела?{}"
+
+bot= Bot(token=TOKEN)
+dp = Dispatcher(bot=bot)
+
+
+@dp.message_handler(commands=['start'])
+async def start_handler(message: types.Message):
+    user_id = message.from_user.id
+    user_name = message.from_user.first_name
+    user_full_name = message.from_user.full_name
+    logging.info(f'{user_id} {user_full_name} {time.asctime()}')
+    await message.reply(f"Привет, {user_full_name}!")
+
+    for i in range(7):
+        time.sleep(60*60*24)
+        await bot.send_message(user_id, MSG.format(user_name))
+
+    if __name__ =="__main__":
+        executor.start_polling(dp)
+
+
+
